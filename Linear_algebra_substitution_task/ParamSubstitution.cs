@@ -52,10 +52,18 @@ namespace Linear_algebra_substitution_task
                     switch (assign)
                     {
                         case SubstitutionAssign.Positive:
-                            if (invNumber % 2 == 0) varNumber++;
+                            if (invNumber % 2 == 0)
+                            {
+                                varNumber++;
+                                PrintCertainSubstitution(higherPerm, lowerPerm);
+                            }
                             break;
                         case SubstitutionAssign.Negative:
-                            if (invNumber % 2 != 0) varNumber++;
+                            if (invNumber % 2 != 0)
+                            {
+                                varNumber++;
+                                PrintCertainSubstitution(higherPerm, lowerPerm);
+                            }
                             break;
                     }
                 }
@@ -68,10 +76,10 @@ namespace Linear_algebra_substitution_task
         {
             var sortedPermutation = new StringBuilder(higherPerm);
 
-            foreach (var number in higherPerm)
+            for (int i = 0; i < higherPerm.Length; i++)
             {
-                int intVal = number - '0'; // getting int value from char
-                sortedPermutation[intVal - 1] = number;
+                int intVal = higherPerm[i] - '0'; // getting int value from char
+                sortedPermutation[intVal - 1] = lowerPerm[i];
             }
 
             Console.WriteLine(sortedPermutation);
