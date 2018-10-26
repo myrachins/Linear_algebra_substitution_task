@@ -15,6 +15,6 @@ How many variants off (p, r, s) exists to make this substitution be positive in 
 + There is no check for input values, so run it carefully
 + Input going from incoded constansts
 
-+ Developers:
-  + Maxim Rachinskiy
+## Developers:
++ Maxim Rachinskiy
    
