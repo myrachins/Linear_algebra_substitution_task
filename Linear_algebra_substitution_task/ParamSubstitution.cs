@@ -72,15 +72,33 @@ namespace Linear_algebra_substitution_task
             return varNumber;
         }
 
-        private void PrintCertainSubstitution(string higherPerm, string lowerPerm)
+        /// <summary>
+        /// This method sorts lower permutation by higher values
+        /// </summary>
+        /// <param name="higherPerm"> Higher permutation </param>
+        /// <param name="lowerPerm"> Lower permutation </param>
+        /// <returns> sorted lower permutation </returns>
+        private string SortPermutationByHigher(string higherPerm, string lowerPerm)
         {
             var sortedPermutation = new StringBuilder(higherPerm);
 
             for (int i = 0; i < higherPerm.Length; i++)
             {
                 int intVal = higherPerm[i] - '0'; // getting int value from char
-                sortedPermutation[intVal - 1] = lowerPerm[i];
+                sortedPermutation[intVal - 1] = lowerPerm[i]; // changing value of sorted by value in lower permutation
             }
+
+            return sortedPermutation.ToString();
+        }
+
+        /// <summary>
+        /// This method sorts and prints lower permutation by higher values 
+        /// </summary>
+        /// <param name="higherPerm"> Higher permutation </param>
+        /// <param name="lowerPerm"> Lower permutation </param>
+        private void PrintCertainSubstitution(string higherPerm, string lowerPerm)
+        {
+            var sortedPermutation = SortPermutationByHigher(higherPerm, lowerPerm);
 
             Console.WriteLine(sortedPermutation);
         }
@@ -89,16 +107,9 @@ namespace Linear_algebra_substitution_task
         /// This methods calculates inversion number of inversions
         /// </summary>
         /// <returns></returns>
-        private int InversionNumber(string perm1, string perm2)
+        private int InversionNumber(string higherPerm, string lowerPerm)
         {
-            var sortedPermutation = new StringBuilder(perm1);
-
-            for (int i = 0; i < perm1.Length; i++)
-            {
-                int intVal = perm1[i] - '0'; // getting int value from char
-                sortedPermutation[intVal - 1] = perm2[i];
-            }
-
+            var sortedPermutation = SortPermutationByHigher(higherPerm, lowerPerm);
             var inverNumber = 0;
 
             for (int i = 0; i < sortedPermutation.Length; i++)
@@ -110,6 +121,9 @@ namespace Linear_algebra_substitution_task
         }
     }
 
+    /// <summary>
+    /// Enum of possible assign of substitution
+    /// </summary>
     enum SubstitutionAssign
     {
         Positive, Negative

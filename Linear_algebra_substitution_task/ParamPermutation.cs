@@ -16,6 +16,11 @@ namespace Linear_algebra_substitution_task
             CertainNumbers = new List<int>();
         }
 
+        /// <summary>
+        /// Add element to permutation.
+        /// If its a parameter it will be inserted like "0" or "1" and etc
+        /// </summary>
+        /// <param name="element"></param>
         public void AddElement(string element)
         {
             int parsed;
@@ -49,7 +54,7 @@ namespace Linear_algebra_substitution_task
 
                 foreach (var insert in combination)
                 {
-                    currentString = currentString.Replace($"\"{counter++}\"", insert.ToString());
+                    currentString = currentString.Replace($"\"{counter++}\"", insert.ToString()); // Replacing parameter from permutation
                 }
 
                 permutations.Add(currentString);
@@ -58,26 +63,39 @@ namespace Linear_algebra_substitution_task
             return permutations;
         }
 
-        private void CalculateAllCombinations<T>(IList<T> arr, ref List<List<T>> allCombinations, 
-            List<T> current = null)
+        /// <summary>
+        /// This method calculates all possible combinations of inputed numbers
+        /// </summary>
+        /// <typeparam name="T"> Type of number </typeparam>
+        /// <param name="numbers"> Numbers to calculate </param>
+        /// <param name="allCombinations"> List with all combinations </param>
+        /// <param name="currentCombination"> Current combination (Needed in recursion) </param>
+        private void CalculateAllCombinations<T>(List<T> numbers, ref List<List<T>> allCombinations, 
+            List<T> currentCombination = null)
         {
-            if (current == null)
-                current = new List<T>();
-            if (arr.Count == 0)
+            if (currentCombination == null)
+                currentCombination = new List<T>();
+
+            if (numbers.Count == 0)
             {
-                allCombinations.Add(current);
+                allCombinations.Add(currentCombination);
                 return;
             }
-            for (int i = 0; i < arr.Count; i++)
+            for (int i = 0; i < numbers.Count; i++)
             {
-                List<T> lst = new List<T>(arr);
-                lst.RemoveAt(i);
-                var newCurrent = new List<T>(current);
-                newCurrent.Add(arr[i]);
-                CalculateAllCombinations(lst, ref allCombinations, newCurrent);
+                var newNumbers = new List<T>(numbers);
+                var newCurrentCombination = new List<T>(currentCombination);
+
+                newNumbers.RemoveAt(i); // Removing i element from new list
+                newCurrentCombination.Add(numbers[i]); // Now current combination contains deleted element att left
+                CalculateAllCombinations(newNumbers, ref allCombinations, newCurrentCombination);
             }
         }
 
+        /// <summary>
+        /// This method finds all left values, that can exist in current permutation
+        /// </summary>
+        /// <returns> List of all possible values </returns>
         private List<int> GetAllLeftValues()
         {
             var leftValues = new List<int>();
